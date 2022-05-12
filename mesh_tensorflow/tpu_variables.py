@@ -20,6 +20,7 @@ from __future__ import division
 from __future__ import print_function
 
 import contextlib
+import inspect
 
 # pylint: disable=g-direct-tensorflow-import
 from tensorflow.python.framework import ops
@@ -82,9 +83,13 @@ class ReplicatedVariable(VariableBase):
     if tpu_context is None:
       return self._primary_var.handle
 
-    # Using variable name as handle id.
-    return tpu_context.get_replicated_var_handle(self._name, self._name,
-                                                 self._vars)
+    # TODO(adarob): Remove backward-compatibility when TF 2.10 is released.
+    if 'handle_id' not in inspect.signature(
+        tpu_context.get_replicated_var_handle).parameters:
+      return tpu_context.get_replicated_var_handle(
+          name=self._name, vars_=self._vars)
+    return tpu_context.get_replicated_var_handle(
+        name=self._name, handle_id=self._name, vars_=self._vars)
 
   @contextlib.contextmanager
   def _assign_dependencies(self):
