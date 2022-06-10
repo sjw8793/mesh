@@ -23,7 +23,7 @@ import mesh_tensorflow as mtf
 from mesh_tensorflow.transformer import vocab_embeddings
 import mock
 import numpy as np
-import scipy.misc
+import scipy.special
 import tensorflow.compat.v1 as tf
 
 
