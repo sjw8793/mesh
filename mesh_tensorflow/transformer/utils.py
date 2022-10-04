@@ -1897,7 +1897,7 @@ def score_from_strings(estimator, vocabulary, model_type, batch_size,
   evenly divide targets N times, where each input has N decodes sequentially
   in targets.
 
-  The function returns a list of floats represnenting the log-liekelihood of the
+  The function returns a list of floats representing the log-likelihood of the
   target given the input.  If `scores_filename` is present, then these are also
   written out as a text file, one per line.
 
