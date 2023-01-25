@@ -24,6 +24,7 @@ import inspect
 
 # pylint: disable=g-direct-tensorflow-import
 from tensorflow.python.framework import ops
+from tensorflow.python.framework import tensor_conversion_registry
 from tensorflow.python.ops import control_flow_ops
 from tensorflow.python.ops import gen_resource_variable_ops
 
@@ -223,7 +224,8 @@ def _tensor_conversion(var, dtype=None, name=None, as_ref=False):
   return var._dense_var_to_tensor(dtype=dtype, name=name, as_ref=as_ref)  # pylint: disable=protected-access
 
 
-ops.register_tensor_conversion_function(ReplicatedVariable, _tensor_conversion)
+tensor_conversion_registry.register_tensor_conversion_function(
+    ReplicatedVariable, _tensor_conversion)
 
 if not TF_23:
   ops.register_dense_tensor_like_type(ReplicatedVariable)
