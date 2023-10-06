@@ -100,7 +100,7 @@ def attention(q,
 
   weights = mtf.softmax(logits, memory_length_dim, extra_logit=extra_logit)
   weights = mtf.cast(weights, v.dtype)
-  if context.train:
+  if context:
     weights = mtf.dropout(
         weights, context.train, 1.0 - dropout_rate,
         noise_shape=weights.shape - dropout_broadcast_dims)
